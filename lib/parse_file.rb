@@ -1,14 +1,17 @@
-class ParseMe
+require_relative 'file_validator.rb'
 
-	def initialize(log_file_name)
+class ParseFile
+
+	def initialize(log_file_path)
+		#Validating file
+		FileValidator.validate_log_file(log_file_path)
 		#initializing variables
-		check_if_file_exists(log_file_name)
-		@log_file_name, @log_hash = log_file_name, Hash.new { |hash, key| hash[key] = [] }
+		@log_file_path, @log_hash = log_file_path, Hash.new { |hash, key| hash[key] = [] }
 	end
 
 	def read_file_store_logs
 		#reading file from path
-		file = File.open(@log_file_name).each do |content|
+		file = File.open(@log_file_path).each do |content|
       view_name, ip_address = content.split(' ')
       @log_hash[view_name] << ip_address
     end
@@ -29,11 +32,6 @@ class ParseMe
 
 	private
 
-	def check_if_file_exists(log_file_name) 
-		#checking if file exist
-		raise "File #{log_file_name} doesnot exist" unless File.exist?(log_file_name) 
-	end
-
 	def get_sorted_hash_and_print_result(query = nil)
 		#DRY used for unique and all values of array
 		@sorted_hash = Hash.new
@@ -41,14 +39,18 @@ class ParseMe
 			@sorted_hash[view_name] = query ? ip_addresses.uniq.count : ip_addresses.count
 		end
 		print_result(query)
+		@sorted_hash
 	end
 
 	def print_result(query)
 		#printing the output
-		extra_text = query ? 'unique views' : 'views'
+		extra_text = query ? 'unique views' : 'total views'
+		puts "------------------------"
+		puts "#{extra_text.capitalize}"
 		@sorted_hash.each do |view_name, ip_addresses_count|
-			puts "#{view_name} #{ip_addresses_count} #{extra_text}"
+			puts "#{view_name} has #{ip_addresses_count} #{extra_text}"
 		end
+		puts "------------------------"
 	end
 
 end

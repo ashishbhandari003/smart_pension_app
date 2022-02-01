@@ -1,12 +1,24 @@
 Running the project:
 
-1. Run this command "ruby ./parser.rb webserver.log" to check the output as per the file content.
+1. Install rvm if not installed using "curl -sSL https://get.rvm.io | bash"
+
+2. Install ruby if not installed using "rvm install 2.6.3"
+
+3. Use the installed ruby using "rvm use 2.1"
+
+4. Check the version using "ruby -v"
+
+5. Install bundler using "gem install bundler"
+
+6. Install gems in Gemfile using "bundle install"
+
+7. Rub the application using "ruby ./parser.rb webserver.log"
 
 Dependency:
 
 1. There is no dependency. Ruby 2.6.3 and rspec gem is used to make this project. You may install and use any ruby using RVM.
 
-Coding Approach
+Coding Approach:
 
 1. I have tried to make this as DRY and object-orieted as possible.
 
@@ -35,4 +47,10 @@ Coding Approach
 		print_result(query)
 	end
 
-8. Code is tried to be kept simmple and clean as possible.
+8. Code is tried to be kept simple and clean as possible.
+
+9. Test-Driven Development (TDD) is involved.
+
+10. FileValidator is used to validate argument passed as File type.
+
+11. ParseFile is used to read and store logs and then print output.

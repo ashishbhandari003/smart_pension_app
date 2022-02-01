@@ -1,23 +1,16 @@
 require_relative '../spec_helper'
-require_relative '../../lib/parse_me'
+require_relative '../../lib/parse_file'
 
-RSpec.describe 'ParseMe' do
+RSpec.describe 'ParseFile' do
 
 	before(:all) do
-		@parser = ParseMe.new('test_webserver.log')
+		@parser = ParseFile.new('test_webserver.log')
     @file = File.open('test_webserver.log')
   end
 
   after(:all) do
     @file.close
   end
-
-	describe 'initialized with wrong path' do
-		it 'is expected to raise error if path doesnot exist' do
-			wrong_log_file_name = 'wrong_webserver.log'
-			expect{ParseMe.new(wrong_log_file_name)}.to raise_error(RuntimeError, "File #{wrong_log_file_name} doesnot exist")
-		end
-	end
 
 	describe 'reading the path' do
 		it 'is expected to be a file' do
@@ -28,7 +21,11 @@ RSpec.describe 'ParseMe' do
 	describe 'stored logs from reading file' do
 
 		it 'is expected to raise error if file is blank' do
-			expect{ParseMe.new('empty_webserver.log').read_file_store_logs}.to raise_error(RuntimeError, "File seems to be blank")
+			expect{ParseFile.new('empty_webserver.log').read_file_store_logs}.to raise_error(RuntimeError, "File seems to be blank")
+		end
+
+		it 'is expected to be stored in hash' do
+			expect(ParseFile.new('test_webserver.log').read_file_store_logs).to be_instance_of Hash
 		end
 
 		it 'is expected to return correct' do
@@ -49,7 +46,8 @@ RSpec.describe 'ParseMe' do
 			sorted_hash = {"/home"=>5, 
 				"/about/2"=>9, 
 				"/help_page/1"=>10, 
-				"/about"=>6, "/contact"=>4, 
+				"/about"=>6, 
+				"/contact"=>4, 
 				"/index"=>9
 			}
 			expect(@parser.print_sorted_most_views).to eq(sorted_hash)
@@ -71,6 +69,3 @@ RSpec.describe 'ParseMe' do
 	end
 
 end
-
-
- 
