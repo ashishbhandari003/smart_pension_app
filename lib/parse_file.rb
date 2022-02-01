@@ -45,12 +45,12 @@ class ParseFile
 	def print_result(query)
 		#printing the output
 		extra_text = query ? 'unique views' : 'total views'
-		puts "------------------------"
-		puts "#{extra_text.capitalize}"
+		puts '----------------------------------------------'
+		puts 'ADDRESS'.ljust(21) + "#{extra_text.upcase}"
 		@sorted_hash.each do |view_name, ip_addresses_count|
-			puts "#{view_name} has #{ip_addresses_count} #{extra_text}"
+			puts "#{view_name.ljust(20)} #{ip_addresses_count} #{extra_text}"
 		end
-		puts "------------------------"
+		puts '----------------------------------------------'
 	end
 
 end
