@@ -4,8 +4,8 @@ require_relative '../../lib/parse_file'
 RSpec.describe 'ParseFile' do
 
 	before(:all) do
-		@parser = ParseFile.new('test_webserver.log')
-    @file = File.open('test_webserver.log')
+		@parser = ParseFile.new('spec/logs/test_webserver.log')
+    @file = File.open('spec/logs/test_webserver.log')
   end
 
   after(:all) do
@@ -21,11 +21,11 @@ RSpec.describe 'ParseFile' do
 	describe 'stored logs from reading file' do
 
 		it 'is expected to raise error if file is blank' do
-			expect{ParseFile.new('empty_webserver.log').read_file_store_logs}.to raise_error(RuntimeError, "File seems to be blank")
+			expect{ParseFile.new('spec/logs/empty_webserver.log').read_file_store_logs}.to raise_error(RuntimeError, "File seems to be blank")
 		end
 
 		it 'is expected to be stored in hash' do
-			expect(ParseFile.new('test_webserver.log').read_file_store_logs).to be_instance_of Hash
+			expect(ParseFile.new('spec/logs/test_webserver.log').read_file_store_logs).to be_instance_of Hash
 		end
 
 		it 'is expected to return correct' do

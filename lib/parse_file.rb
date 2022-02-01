@@ -30,19 +30,7 @@ class ParseFile
 		get_sorted_hash_and_print_result(true)
 	end
 
-	private
-
-	def get_sorted_hash_and_print_result(query = nil)
-		#DRY used for unique and all values of array
-		@sorted_hash = Hash.new
-		@log_hash.each do |view_name, ip_addresses|
-			@sorted_hash[view_name] = query ? ip_addresses.uniq.count : ip_addresses.count
-		end
-		print_result(query)
-		@sorted_hash
-	end
-
-	def print_result(query)
+	def print_result(query = nil)
 		#printing the output
 		extra_text = query ? 'unique views' : 'total views'
 		puts '----------------------------------------------'
@@ -51,6 +39,17 @@ class ParseFile
 			puts "#{view_name.ljust(20)} #{ip_addresses_count} #{extra_text}"
 		end
 		puts '----------------------------------------------'
+	end
+
+	private
+
+	def get_sorted_hash_and_print_result(query = nil)
+		#DRY used for unique and all values of array
+		@sorted_hash = Hash.new
+		@log_hash.each do |view_name, ip_addresses|
+			@sorted_hash[view_name] = query ? ip_addresses.uniq.count : ip_addresses.count
+		end
+		@sorted_hash
 	end
 
 end
